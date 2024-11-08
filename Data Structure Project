@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    char name[30];
+    int hours;
+} Subject;
+
+void displaySchedule(Subject subjects[], int n, int breakTime) {
+    printf("\nStudy Schedule:\n");
+    int currentTime = 0; // Starting time
+    for (int i = 0; i < n; i++) {
+        printf("From %02d:00 to %02d:00 - Study %s\n", currentTime, currentTime + subjects[i].hours, subjects[i].name);
+        currentTime += subjects[i].hours;
+        if (i < n - 1) {
+            printf("From %02d:00 to %02d:00 - Break\n", currentTime, currentTime + breakTime);
+            currentTime += breakTime;
+        }
+    }
+}
+
+int main() {
+    int n, breakTime;
+    
+    printf("Enter the number of subjects: ");
+    scanf("%d", &n);
+    
+    Subject *subjects = (Subject *)malloc(n * sizeof(Subject));
+    
+    for (int i = 0; i < n; i++) {
+        printf("Enter the name of subject %d: ", i + 1);
+        scanf("%s", subjects[i].name);
+        printf("Enter the study time for %s (in hours): ", subjects[i].name);
+        scanf("%d", &subjects[i].hours);
+    }
+    
+    printf("Enter break time between sessions (in hours): ");
+    scanf("%d", &breakTime);
+    
+    displaySchedule(subjects, n, breakTime);
+    free(subjects);
+return 0;
+}
